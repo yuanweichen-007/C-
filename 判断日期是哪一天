@@ -1,0 +1,64 @@
+#include<stdio.h>
+
+int year_num(int x);
+int check(int a,int b,int c);
+
+int main() 
+{ 
+	 int date=0,year,month,day;
+	 scanf("%d %d %d",&year,&month,&day);
+	 if(check(year,month,day)!=1){
+	 	printf("你输入的日期有误\n"); 
+	 }else{
+		 switch(month)
+		 {
+			 case 12:date+=30;
+			 case 11:date+=31;
+			 case 10:date+=30;
+			 case 9:date+=31;
+			 case 8:date+=31;
+			 case 7:date+=30;
+			 case 6:date+=31;
+			 case 5:date+=30;
+			 case 4:date+=31;
+			 case 3:if(year_num(year)){
+					    date+=29;
+					}else{
+					    date+=28;
+				    }
+			 case 2:date+=31;
+			 case 1:date+=day;
+			        printf("%d年%d月%d日是该年的第%d天\n",year,month,day,date);
+			        break;
+			 default:printf("你输入的日期有误\n");
+			         break;
+		 }
+     }
+	return 0;
+}
+
+int year_num(int x)
+{
+	int ret=0;
+	if(x%4==0&&x%100!=0||x%400==0){
+		ret=1;
+	}
+	return ret;
+}
+
+int check(int a,int b,int c)
+{
+    int ret=1;
+    if((b%2!=0&&b<8||b%2==0&&b>=8)&&c>31){
+		ret=0;
+	}
+	if((b==4||b==6||b==9||b==11)&&c>30){
+		ret=0;
+	}
+	if(b==2&&year_num(a)&&c>29){
+		ret=0;
+	}else if(b==2&&(!year_num(a))&&c>28){
+		ret=0;
+	}
+    return ret;
+}
